@@ -15,7 +15,7 @@ def GetPosts():
     for post in cursor.execute("""SELECT * FROM blog_posts"""):
         lst_post = list(post)
         all_posts.append(dict(zip(key_lst,lst_post)))
-    return all_posts
+    return all_posts[::-1]
 
 def SubmitPost(title,subtitle,author,body,img_url):
     date =datetime.datetime.now()

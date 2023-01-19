@@ -25,17 +25,23 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <p>
-            {{post.body}}
+            {{ post.body | safe() }}
           </p>
            <hr>
            <div class="clearfix">
             {% if current_user.id == 1 %}
               <a class="btn btn-primary float-right" href="{{url_for('edit_post', post_id=post.id)}}">Edit Post</a>
             {% endif %}
-
-              <ul style="list-style: none;">
+            <br>
+            <ul style="list-style: none;">
+              <br>
               {% for comm in comments %}
-                <li> <img src="{{comm[2] | gravatar }}" alt="{{comm[2]}}"> : {{comm[3]}} </li>
+                <div style="background-color: bisque; position: relative;">
+                  <ul style="list-style: none; padding-left: 1rem; padding-top: 1rem;">
+                    <li><img src="{{comm[2] | gravatar }}" alt="{{comm[2]}}"> : {{comm[3]}} </li>
+                    <li style="font-size: small; color: gray;">{{comm[2]}}</li>
+                  </ul>
+                </div>
                 <br>
               {% endfor %}
               </ul>

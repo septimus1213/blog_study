@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, request, url_for, flash, abo
 from flask_bootstrap import Bootstrap
 from flask_gravatar import Gravatar
 from bs4 import BeautifulSoup
+
 from functools import wraps
 
 from forms import *
@@ -10,7 +11,11 @@ from database_manager import *
 app = Flask(__name__)
 ckeditor = CKEditor(app=app)
 app.config['SECRET_KEY'] = 'verysecretkey'
+
+
 Bootstrap(app)
+
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
@@ -121,7 +126,7 @@ def edit_post(post_id):
         subtitle=form.subtitle.data,
         author=form.author.data,
         img_url=form.img_url.data,
-        body=BeautifulSoup(form.body.data,"html.parser").text)
+        body=form.body.data)
         return redirect(url_for('get_all_posts'))
     return render_template('make-post.html', form=form, header=header, req_method=req_method,id=post_id)
 
@@ -136,7 +141,7 @@ def new_post():
         subtitle = form.subtitle.data
         author = form.author.data
         img_url = form.img_url.data
-        body = BeautifulSoup(form.body.data,"html.parser").text
+        body = form.body.data
 
         SubmitPost(title=title,subtitle=subtitle,author=author,img_url=img_url,body=body)
         return redirect(url_for('get_all_posts'))
